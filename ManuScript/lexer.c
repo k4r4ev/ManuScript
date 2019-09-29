@@ -2,20 +2,28 @@
 
 char** lexer(char* buffer) {
 	spaces(buffer);
-	//считаем количество токенов
 	int tokenNumberInt = 0;
 	for (int i = 0; i < strlen(buffer); i++)
 		if (buffer[i] == ';')
-			tokenNumberInt++;
-	//создаем массив для токенов
-	char** tokens;
-	tokens = (char**)malloc(512 * MAX_SIZE);
-	for (int i = 0; i < 512; i++) {
-		tokens[i] = (char*)malloc(512);
+			tokenNumberInt++;		//считаем количество токенов
+	char** tokens;		//создаем массив для токенов
+	tokens = (char**)malloc(tokenNumberInt + 1 * MAX_SIZE);
+	for (int i = 0; i < tokenNumberInt + 1; i++) {
+		tokens[i] = (char*)malloc(MAX_SIZE);
 	}
-	//количество токенов для записи в массив токенов
-	char* tokenNumberChar = inverting(tokenNumberInt);
-	tokenNumberChar = (char*)malloc(512);
+	char* tokenNumberChar = convertToChar(tokenNumberInt);		//количество токенов для записи в массив токенов
+	memcpy(tokens[0], tokenNumberChar, sizeof(&tokenNumberChar));	//записываем число токенов в первый элемент
+	for (int i = 1; i < tokenNumberInt + 1; i++) {
+		char token[512] = { 0 };
+		strncpy_s(token, sizeof(token), buffer, (strstr(buffer, ";")) - buffer + 1);    //ищем и сохраняем строку в token
+		squeeze(buffer, (strstr(buffer, ";")) - buffer + 1);    //удаляем строку из буфера
+		strncpy_s(tokens[i], sizeof(token), token, sizeof(token));
+	}
+	return tokens;
+}
+
+char* convertToChar(int tokenNumberInt) {
+	char * tokenNumberChar = (char*)malloc(512);
 	int v = 0; //количество цифр в числе
 	while (tokenNumberInt > 9)
 	{
@@ -32,25 +40,7 @@ char** lexer(char* buffer) {
 		tokenNumberChar[i] = tokenNumberChar[v - 1 - i];
 		tokenNumberChar[v - 1 - i] = t;
 	}
-	memcpy(tokens[0], tokenNumberChar, sizeof(&tokenNumberChar));
-	int i = 1;
-	while (buffer[0] != '\0') {
-		char token[512] = { 0 };
-		strncpy_s(token, sizeof(token), buffer, (strstr(buffer, ";")) - buffer + 1);    //ищем и сохраняем строку в token
-		squeeze(buffer, (strstr(buffer, ";")) - buffer + 1);    //удаляем строку из буфера
-		//parser(token);
-		//printf("%s", token);
-		strncpy_s(tokens[i], sizeof(token), token, sizeof(token));
-		//tokens[i] = token;
-		//printf("%s", tokens[i]);
-		//printf("%d", i);
-		i++;
-	}
-	return tokens;
-}
-
-char inverting(int tokenNumberInt) {
-
+	return tokenNumberChar;
 }
 
 void spaces(char* buffer) {
