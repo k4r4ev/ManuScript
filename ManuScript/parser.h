@@ -1,5 +1,7 @@
 #pragma once
 
+#include "main.h"
+
 void parser(char*);
 double expression(char*);
 double element(char*, int*);

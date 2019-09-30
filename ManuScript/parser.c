@@ -140,7 +140,7 @@ double number(char* buffer, int* index) {   //функци€, распознающа€ число
 
 char* brackets(const char* buffer, int* index) {  //функци€ дл€ извлечени€ подстроки
 	char buf[128];       //временное пространство дл€ подстроки
-	char* p_str = 0;        //указатель на новую строку дл€ возврата
+	char* p_str = (char*)malloc(MAX_SIZE);        //указатель на новую строку дл€ возврата
 	int numL = 0;           //счетчик найденных левых скобок
 	int buf_index = *index;  //сохранить начальное значение index
 	do {
@@ -151,9 +151,8 @@ char* brackets(const char* buffer, int* index) {  //функци€ дл€ извлечени€ подст
 			if (numL == 0) {
 				buf[*index - buf_index] = '\0'; //если счетчик скобочек верный, ставим символ конца строки
 				*index = *index + 1;    //устанавливаем индекс на следующий за скобочкой элемент
-				p_str = malloc(sizeof(buf));
-				if (p_str)    //чтобы не пуста€
-					strcpy_s(p_str, sizeof(p_str), buf); //и копируем подстроку в новую пам€ть
+				//p_str = (char*)malloc(MAX_SIZE);
+				strncpy_s(p_str, MAX_SIZE, buf, MAX_SIZE); //и копируем подстроку в новую пам€ть
 				return p_str;
 			}
 			else

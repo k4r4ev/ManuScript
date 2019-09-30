@@ -5,7 +5,6 @@ int main() {
 	char** tokens = 0;
 	char buffer[MAX_SIZE] = { 0 };
 	while (gets(buffer)) {
-		printf("buffer - %s\n", buffer);
 		tokens = lexer(buffer);
 		printf("token number - %s\n", tokens[0]);
 		int tokenNumber = atoi(tokens[0]);
