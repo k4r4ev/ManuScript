@@ -61,7 +61,7 @@ double function(char* buffer, int* index) {  //функция для выполнения функции
 	int buf_index = 0;
 	int temp_index = *index; //переменная для хранения индекса (чтобы если что вернуть индекс без изменений)
 	char* p_str = 0;    //временный указатель для сравнения символов
-	double value = 0;
+	double value = 0.0;
 	while (isalpha(buffer[temp_index]))    //если символ
 	{
 		buf_index++;    //сколько букв
