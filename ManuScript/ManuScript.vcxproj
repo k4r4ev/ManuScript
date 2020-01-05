@@ -123,11 +123,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="functions.c" />
     <ClCompile Include="lexer.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="parser.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="functions.h" />
     <ClInclude Include="lexer.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="parser.h" />

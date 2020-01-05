@@ -3,5 +3,5 @@
 #include "main.h"
 
 char** lexer(char*); //лексическая обработка
-void spaceRemove(char*);    //удаление пробелов
-void substringRemove(char*, int);  //удаление подстроки
+void spacesRemove(char*); //удаление пробелов
+void stringRemove(char*, int); //удаление подстроки

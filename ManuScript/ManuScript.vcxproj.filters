@@ -24,6 +24,9 @@
     <ClCompile Include="parser.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="functions.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -33,6 +36,9 @@
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="parser.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="functions.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
