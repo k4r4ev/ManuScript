@@ -14,8 +14,7 @@ void parser(char* string) {
 		i++;
 		function = buffer; //сохраняем функцию
 		argument = brackets(string, &i);
-		//parser(argument);
-		printf("\t %s [ %s ] = %lf \n", function, argument, value); //печать функции с аргументом
+		textFunction(function, argument);
 		break;
 	case '=':
 		variable = buffer; //сохраняем функцию
@@ -23,7 +22,7 @@ void parser(char* string) {
 			k++;
 		string[--k] = '\0'; //убираем точку с запятой
 		value = expression(string); //отправляем содержимое после знака равно считаться
-		printf("\t %s = %lf \n", variable, value); //печать переменной
+		printf("\t\t%s = %lf \n", variable, value); //печать переменной
 		break;
 	default:
 		function = buffer; //сохраняем функцию
@@ -67,12 +66,11 @@ double element(char* buffer, int* index) { //функция для анализа элемента
 
 double function(char* buffer, int* index) { //функция для выполнения функции
 	int buf_index = 0;
-	int temp_index = *index; //переменная для хранения индекса (чтобы если что вернуть индекс без изменений)
 	char* p_str; //временный указатель для сравнения символов
 	double value = 0.0;
-	while (isalpha(buffer[temp_index])) { //если символ
+	while (isalpha(buffer[*index])) { //если символ
 		buf_index++; //сколько букв
-		temp_index++; //текущий индекс
+		*index = *index + 1;
 	}
 	if (!buf_index) { //если нет ни одной буквы, то возвращаем число
 		value = number(buffer, index);
@@ -81,8 +79,8 @@ double function(char* buffer, int* index) { //функция для выполнения функции
 	else { //иначе смотрим, являются ли буквы чем-нибудь этим
 		p_str = malloc(buf_index + 1); //а для этого создаем временную строку, чтобы сравнить
 		p_str[buf_index] = '\0';
-		strncpy_s(p_str, sizeof(p_str), buffer + *index, buf_index);
-		return mathOperation(p_str, number(buffer, &temp_index), index, temp_index);	//выполнияем функцию
+		strncpy_s(p_str, sizeof(p_str), buffer + (*index - buf_index), buf_index);
+		return mathFunction(p_str, number(buffer, index));	//выполнияем функцию
 	}
 }
 
@@ -109,6 +107,7 @@ double number(char* buffer, int* index) { //функция, распознающая число
 		factor *= 0.1;
 		char p_str = buffer[*index]; //сохраним число чтобы отправить ссылку в atof
 		value = value + atof(&p_str) * factor;
+		//value = value + atof(buffer[*index]) * factor; //нельзя модифицировать константу
 		*index = *index + 1;
 	}
 	return value;

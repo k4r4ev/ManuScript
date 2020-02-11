@@ -2,4 +2,5 @@
 
 #include "main.h"
 
-double mathOperation(char*, double, int*, int);
+void textFunction(char*, char*);
+double mathFunction(char*, double);

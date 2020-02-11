@@ -9,7 +9,6 @@ int main() {
 		tokens = lexer(buffer);
 		int tokenNumber = atoi(tokens[0]);
 		for (int i = 1; i <= tokenNumber; i++) {
-			//printf("%s\n", tokens[i]);
 			parser(tokens[i]);
 		}
 	}

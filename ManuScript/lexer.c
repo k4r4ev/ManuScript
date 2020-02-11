@@ -1,11 +1,16 @@
 #include "lexer.h"
 
 char** lexer(char* buffer) {
-	spacesRemove(buffer);
+	spacesRemoving(buffer);
 	int tokenNumberInt = 0;
 	for (int i = 0; i < strlen(buffer); i++) {
-		if (buffer[i] == ';')
+		if (buffer[i] == ';') {
 			tokenNumberInt++; //считаем количество токенов
+		}
+	}
+	if (tokenNumberInt == 0) {
+		buffer[strlen(buffer)] = ';';
+		tokenNumberInt++;
 	}
 	char** tokens; //создаем массив для токенов
 	tokens = (char**)malloc(tokenNumberInt + 1 * MAX_SIZE);
@@ -18,13 +23,13 @@ char** lexer(char* buffer) {
 	for (int i = 1; i < tokenNumberInt + 1; i++) {
 		char token[512] = { 0 };
 		strncpy_s(token, sizeof(token), buffer, (strstr(buffer, ";")) - buffer + 1); //ищем и сохраняем строку в token
-		stringRemove(buffer, (strstr(buffer, ";")) - buffer + 1); //удаляем строку из буфера
+		stringRemoving(buffer, (strstr(buffer, ";")) - buffer + 1); //удаляем строку из буфера
 		strncpy_s(tokens[i], sizeof(token), token, sizeof(token));
 	}
 	return tokens;
 }
 
-void spacesRemove(char* buffer) {
+void spacesRemoving(char* buffer) {
 	int i = 0, j = 0;
 	bool quotes = false; //пробелы в кавычках не удаляем
 	while ((buffer[i] = buffer[j++]) != '\0') {
@@ -35,7 +40,7 @@ void spacesRemove(char* buffer) {
 	}
 }
 
-void stringRemove(char* buffer, int j) {
+void stringRemoving(char* buffer, int j) {
 	int i = 0;
 	while ((buffer[i] = buffer[j++]) != '\0')
 		i++;
