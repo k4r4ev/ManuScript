@@ -22,7 +22,7 @@ void parser(char* string) {
 			k++;
 		string[--k] = '\0'; //убираем точку с запятой
 		value = expression(string); //отправляем содержимое после знака равно считаться
-		printf("\t\t%s = %lf \n", variable, value); //печать переменной
+		printf("\t%s = %lf \n", variable, value); //печать переменной
 		break;
 	default:
 		function = buffer; //сохраняем функцию

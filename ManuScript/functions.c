@@ -1,12 +1,18 @@
 #include "functions.h"
 
 void textFunction(char* function, char* args) {
-	if (strcmp(function, "print") == 0) { //синус в градусах
-		printf("\t\t%s\n", args);
+	if (strcmp(function, "print") == 0) {
+		printf("\t%s\n", args);
 		return;
 	}
-	else if (strcmp(function, "clear") == 0) { //косинус в градусах
+	else if (strcmp(function, "clear") == 0) {
 		system("cls");
+		return;
+	}
+	else if (strcmp(function, "info") == 0) {
+		printf("\tclear\t-\tclear console\n");
+		printf("\tsin\t-\tsinus of the function\n");
+		printf("\tcos\t-\tcosine of the function\n");
 		return;
 	}
 	else {
