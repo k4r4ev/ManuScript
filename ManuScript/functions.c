@@ -10,9 +10,13 @@ void textFunction(char* function, char* args) {
 		return;
 	}
 	else if (strcmp(function, "info") == 0) {
+		printf("\tinfo\t-\tinformation about functions\n");
+		printf("\tprint\t-\toutput function\n");
 		printf("\tclear\t-\tclear console\n");
-		printf("\tsin\t-\tsinus of the function\n");
+		printf("\tsin\t-\tsine of the function\n");
 		printf("\tcos\t-\tcosine of the function\n");
+		printf("\ttan\t-\ttangent of the function\n");
+		printf("\tctg\t-\tcotangent of the function\n");
 		return;
 	}
 	else {
