@@ -1,7 +1,14 @@
+//LEXER
+//Функции:
+//Предупреждение ошибок
+//Выделение памяти
+//Подготовка токенов
+
 #pragma once
 
 #include "main.h"
 
 char** lexer(char*); //лексическая обработка
+char** prepareTokens(char*); //подготовка токенов
 void spacesRemoving(char*); //удаление пробелов
-void stringRemoving(char*, int); //удаление подстроки
+void deleteCurrentToken(char*, int); //удаление подстроки

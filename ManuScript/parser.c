@@ -1,7 +1,7 @@
 #include "parser.h"
 
 void parser(char* string) {
-	char buffer[128] = { 0 };
+	char buffer[MAX_SIZE] = { 0 };
 	double value = 0.0;
 	char* variable = 0;
 	char* function = 0;

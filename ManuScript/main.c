@@ -4,11 +4,11 @@
 int main() {
 	char** tokens = 0;
 	char buffer[MAX_SIZE] = { 0 };
-	while (gets(buffer)) {
-		if (strlen(buffer) == NULL) break;
+	while (gets_s(buffer, MAX_SIZE)) {
+		if (strlen(buffer) == 0) break;
 		tokens = lexer(buffer);
-		int tokenNumber = atoi(tokens[0]);
-		for (int i = 1; i <= tokenNumber; i++) {
+		int tokensCount = atoi(tokens[0]);
+		for (int i = 1; i <= tokensCount; i++) {
 			parser(tokens[i]);
 		}
 	}

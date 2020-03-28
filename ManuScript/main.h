@@ -7,4 +7,4 @@
 #include <ctype.h>
 #include <math.h>
 
-#define MAX_SIZE 512
+#define MAX_SIZE 128
