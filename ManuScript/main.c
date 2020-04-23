@@ -1,30 +1,20 @@
 #include "lexer.h"
+#include "variables.h"
 #include "parser.h"
 
-struct variable {
-	int index;
-	char name[MAX_SIZE];
-	double value;
-};
-
-void newVariable(struct variable* var, char* name) {
-	strcpy_s(var->name, sizeof(var->name), name);
-	var->index = var->index++;
-}
-
 int main() {
-	char** tokens = 0;
-	struct variable variables[MAX_SIZE] = {1, "tyhtyh", 55.5, 2, "jutjy", 8.5};
-	for (struct variable* var = variables; var < variables + 2; var++)
-	{
-		printf("%lf\n", var->value);
-	}
-	struct variable vars;
-	vars.index = 1;
-	char name[MAX_SIZE] = "greg";
-	newVariable(&vars, &name);
-	printf("%d\n%s", vars.index, vars.name);
+	char** tokens = 0; // двумерный массив для хранения токенов
+	struct variable* varsListHead = NULL; // связный список для хранения переменных
 	char buffer[MAX_SIZE] = { 0 };
+
+	char* n = "greg";
+	pushVariable(&varsListHead, n, 5.5);
+	char* n1 = "gссg";
+	pushVariable(&varsListHead, n1, 6.5);
+	printf("%lf\n", varsListHead->value);
+	printf("%lf\n", getValueByVarName(&varsListHead, n));
+
+
 	while (gets_s(buffer, MAX_SIZE)) {
 		if (strlen(buffer) == 0) break;
 		tokens = lexer(buffer);
