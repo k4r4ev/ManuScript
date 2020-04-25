@@ -2,8 +2,9 @@
 
 #include "main.h"
 #include "functions.h"
+#include "variables.h"
 
-void parser(char*);
+void parser(char*, struct variable**);
 double expression(char*);
 double element(char*, int*);
 double function(char*, int*);

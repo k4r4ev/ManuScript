@@ -19,4 +19,5 @@ double getValueByVarName(struct variable** vars, char* name) {
         }
         tmp = tmp->next;
     }
+    return 0.0;
 }

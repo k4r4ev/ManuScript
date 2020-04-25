@@ -1,6 +1,6 @@
 #include "parser.h"
 
-void parser(char* string) {
+void parser(char* string, struct variable** varsLinkedListHead) {
 	char buffer[MAX_SIZE] = { 0 };
 	double value = 0.0;
 	char* variable = 0;
@@ -17,12 +17,13 @@ void parser(char* string) {
 		textFunction(function, argument);
 		break;
 	case '=':
-		variable = buffer; //сохраняем функцию
+		variable = &buffer; //сохраняем функцию
 		while ((string[k] = string[++i]) != '\0') //убираем все до знака равно
 			k++;
 		string[--k] = '\0'; //убираем точку с запятой
 		value = expression(string); //отправляем содержимое после знака равно считаться
-		printf("\t%s = %lf \n", variable, value); //печать переменной
+		pushVariable(varsLinkedListHead, variable, value);
+		printf("\t%s = %lf\n", variable, getValueByVarName(varsLinkedListHead, variable)); //печать переменной
 		break;
 	default:
 		function = buffer; //сохраняем функцию
