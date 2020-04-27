@@ -47,3 +47,13 @@ double mathFunction(char* function, double value) {
 		return value;
 	}
 }
+
+double argsFunction(struct variable** varsLinkedListHead, char* function, char* args) {
+	if (strcmp(function, "var") == 0) { //вернуть переменную
+		return getValueByVarName(varsLinkedListHead, args);
+	}
+	else {
+		printf("\tFunction parser error\n");
+		return 0.0;
+	}
+}

@@ -5,8 +5,8 @@
 #include "variables.h"
 
 void parser(char*, struct variable**);
-double expression(char*);
-double element(char*, int*);
-double function(char*, int*);
-double number(char*, int*);
+double expression(struct variable**, char*);
+double element(struct variable**, char*, int*);
+double function(struct variable**, char*, int*);
+double number(struct variable**, char*, int*);
 char* brackets(char*, int*);

@@ -7,8 +7,9 @@ void parser(char* string, struct variable** varsLinkedListHead) {
 	char* function = 0;
 	char* argument = 0;
 	int i = 0, k = 0;
-	for (i; (string[i] != '(') && (string[i] != '=') && (string[i] != ';') && (string[i] != '\0'); i++)
+	for (i; (string[i] != '(') && (string[i] != '=') && (string[i] != ';') && (string[i] != '\0'); i++) {
 		buffer[i] = string[i]; //получаем функцию или переменную
+	}
 	switch (string[i]) {
 	case '(':
 		i++;
@@ -21,7 +22,7 @@ void parser(char* string, struct variable** varsLinkedListHead) {
 		while ((string[k] = string[++i]) != '\0') //убираем все до знака равно
 			k++;
 		string[--k] = '\0'; //убираем точку с запятой
-		value = expression(string); //отправляем содержимое после знака равно считаться
+		value = expression(varsLinkedListHead, string); //отправляем содержимое после знака равно считаться
 		pushVariable(varsLinkedListHead, variable, value);
 		printf("\t%s = %lf\n", variable, getValueByVarName(varsLinkedListHead, variable)); //печать переменной
 		break;
@@ -31,67 +32,81 @@ void parser(char* string, struct variable** varsLinkedListHead) {
 	}
 }
 
-double expression(char* buffer) { //функция для вычисления выражения
+double expression(struct variable** varsLinkedListHead, char* buffer) { //функция для вычисления выражения
 	int index = 0; //текущая позиция символа
-	double value = element(buffer, &index); //получаем первый элемент
+	double value = element(varsLinkedListHead, buffer, &index); //получаем первый элемент
 	for (;;)
 		switch (buffer[index++]) //действие на основе текущего символа
 		{
 		case '\0': //конец строки
 			return value;
 		case '+': //знак плюс, прибавляем элемент к value
-			value += element(buffer, &index);
+			value += element(varsLinkedListHead, buffer, &index);
 			break;
 		case '-': //знак минус, вычитаем элемент из value
-			value -= element(buffer, &index);
+			value -= element(varsLinkedListHead, buffer, &index);
 			break;
 		default: //остальное не котируется
 			continue;
 		}
 }
 
-double element(char* buffer, int* index) { //функция для анализа элемента
-	double value = function(buffer, index); //получить первое число элемента и накапливаем значение
+double element(struct variable** varsLinkedListHead, char* buffer, int* index) { //функция для анализа элемента
+	double value = function(varsLinkedListHead, buffer, index); //получить первое число элемента и накапливаем значение
 	while ((buffer[*index] == '*') || (buffer[*index] == '/')) {
 		if (buffer[*index] == '*') {
 			*index = *index + 1;
-			value *= function(buffer, index);
+			value *= function(varsLinkedListHead, buffer, index);
 		}
 		if (buffer[*index] == '/') {
 			*index = *index + 1;
-			value /= function(buffer, index);
+			value /= function(varsLinkedListHead, buffer, index);
 		}
 	}
 	return value;
 }
 
-double function(char* buffer, int* index) { //функция для выполнения функции
+double function(struct variable** varsLinkedListHead, char* buffer, int* index) { //функция для выполнения функции
 	int buf_index = 0;
-	char* p_str; //временный указатель для сравнения символов
+	char* functionName; //временный указатель для сравнения символов
 	double value = 0.0;
 	while (isalpha(buffer[*index])) { //если символ
 		buf_index++; //сколько букв
 		*index = *index + 1;
 	}
 	if (!buf_index) { //если нет ни одной буквы, то возвращаем число
-		value = number(buffer, index);
+		value = number(varsLinkedListHead ,buffer, index);
 		return value;
 	}
 	else { //иначе смотрим, являются ли буквы чем-нибудь этим
-		p_str = malloc(buf_index + 1); //а для этого создаем временную строку, чтобы сравнить
-		p_str[buf_index] = '\0';
-		strncpy_s(p_str, sizeof(p_str), buffer + (*index - buf_index), buf_index);
-		return mathFunction(p_str, number(buffer, index));	//выполнияем функцию
+		functionName = malloc(buf_index + 1); //а для этого создаем временную строку, чтобы сравнить
+		functionName[buf_index] = '\0';
+		strncpy_s(functionName, sizeof(functionName), buffer + (*index - buf_index), buf_index);
+		if (isalpha(buffer[*index + 1])) { //если первый элемент аргумента - символ
+			char* arg;
+			buf_index = 0;
+			*index = *index + 1;
+			while (buffer[*index] != ')') {
+				buf_index++;
+				*index = *index + 1;
+			}
+			arg = malloc(buf_index + 1);
+			strncpy_s(arg, sizeof(arg), buffer + (*index - buf_index), buf_index);
+			argsFunction(varsLinkedListHead, functionName, arg);
+		}
+		else {
+			return mathFunction(functionName, number(varsLinkedListHead, buffer, index));	//выполнияем функцию
+		}
 	}
 }
 
-double number(char* buffer, int* index) { //функция, распознающая число
+double number(struct variable** varsLinkedListHead, char* buffer, int* index) { //функция, распознающая число
 	double value = 0.0; //хранит результирующее значение
 	if (buffer[*index] == '(') {
 		*index = *index + 1;
 		char* p_substr = 0;
 		p_substr = brackets(buffer, index);
-		value = expression(p_substr);
+		value = expression(varsLinkedListHead, p_substr);
 		return value;
 	}
 	while (isdigit(buffer[*index])) { //цикл накапливает ведущие цифры, превращает символы в число
