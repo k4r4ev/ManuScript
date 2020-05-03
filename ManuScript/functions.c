@@ -20,40 +20,40 @@ void textFunction(char* function, char* args) {
 		return;
 	}
 	else {
-		printf("\tFunction parser error\n");
+		printf("\ttextFunction parser error\n");
 		return;
 	}
 }
 
 double mathFunction(char* function, double value) {
 	if (strcmp(function, "sin") == 0) { //синус в градусах
-		value = sin(3.141592 / 180 * value);
+		value = sin(PI / 180 * value);
 		return value;
 	}
 	else if (strcmp(function, "cos") == 0) { //косинус в градусах
-		value = cos(3.141592 / 180 * value);
+		value = cos(PI / 180 * value);
 		return value;
 	}
 	else if (strcmp(function, "tan") == 0) { //тангенс в градусах
-		value = tan(3.141592 / 180 * value);
+		value = tan(PI / 180 * value);
 		return value;
 	}
 	else if (strcmp(function, "ctg") == 0) { //котангенс в градусах
-		value = 1 / tan(3.141592 / 180 * value);
+		value = 1 / tan(PI / 180 * value);
 		return value;
 	}
 	else {
-		printf("\tFunction parser error\n");
+		printf("\tmathFunction parser error\n");
 		return value;
 	}
 }
 
-double argsFunction(struct variable** varsLinkedListHead, char* function, char* args) {
+double varsFunction(struct variable** varsLinkedListHead, char* function, char* args) {
 	if (strcmp(function, "var") == 0) { //вернуть переменную
 		return getValueByVarName(varsLinkedListHead, args);
 	}
 	else {
-		printf("\tFunction parser error\n");
+		printf("\tvarsFunction parser error\n");
 		return 0.0;
 	}
 }

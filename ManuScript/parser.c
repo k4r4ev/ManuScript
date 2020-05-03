@@ -35,7 +35,7 @@ void parser(char* string, struct variable** varsLinkedListHead) {
 double expression(struct variable** varsLinkedListHead, char* buffer) { //функция для вычисления выражения
 	int index = 0; //текущая позиция символа
 	double value = element(varsLinkedListHead, buffer, &index); //получаем первый элемент
-	for (;;)
+	for (;;) {
 		switch (buffer[index++]) //действие на основе текущего символа
 		{
 		case '\0': //конец строки
@@ -49,6 +49,7 @@ double expression(struct variable** varsLinkedListHead, char* buffer) { //функци
 		default: //остальное не котируется
 			continue;
 		}
+	}
 }
 
 double element(struct variable** varsLinkedListHead, char* buffer, int* index) { //функция для анализа элемента
@@ -75,7 +76,7 @@ double function(struct variable** varsLinkedListHead, char* buffer, int* index) 
 		*index = *index + 1;
 	}
 	if (!buf_index) { //если нет ни одной буквы, то возвращаем число
-		value = number(varsLinkedListHead ,buffer, index);
+		value = number(varsLinkedListHead, buffer, index);
 		return value;
 	}
 	else { //иначе смотрим, являются ли буквы чем-нибудь этим
@@ -92,7 +93,7 @@ double function(struct variable** varsLinkedListHead, char* buffer, int* index) 
 			}
 			arg = malloc(buf_index + 1);
 			strncpy_s(arg, sizeof(arg), buffer + (*index - buf_index), buf_index);
-			argsFunction(varsLinkedListHead, functionName, arg);
+			varsFunction(varsLinkedListHead, functionName, arg);
 		}
 		else {
 			return mathFunction(functionName, number(varsLinkedListHead, buffer, index));	//выполнияем функцию
@@ -121,9 +122,8 @@ double number(struct variable** varsLinkedListHead, char* buffer, int* index) { 
 	*index = *index + 1;
 	while (isdigit(buffer[*index])) { //выполнять цикл, пока идут цифры, возвращает десятичную часть
 		factor *= 0.1;
-		char p_str = buffer[*index]; //сохраним число чтобы отправить ссылку в atof
+		char p_str = buffer[*index]; //сохраним число для atof, т.к. константу нельзя модифицировать
 		value = value + atof(&p_str) * factor;
-		//value = value + atof(buffer[*index]) * factor; //нельзя модифицировать константу
 		*index = *index + 1;
 	}
 	return value;

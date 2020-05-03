@@ -5,4 +5,6 @@
 
 void textFunction(char*, char*);
 double mathFunction(char*, double);
-double argsFunction(struct variable**, char*, char*);
+double varsFunction(struct variable**, char*, char*);
+
+#define PI 3.141592
