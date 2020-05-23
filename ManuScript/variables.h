@@ -8,6 +8,6 @@ struct variable {
     struct variable *next;
 };
 
-void pushVariable(struct variable **, char *, double);
+void push_variable(struct variable **, char *, double);
 
-double getValueByVarName(struct variable **, char *);
+double get_value_by_var_name(struct variable **, char *);

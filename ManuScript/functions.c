@@ -1,13 +1,15 @@
 #include "functions.h"
 
-void textFunction(char *function, char *args) {
+void text_function(char* function, char* args) {
     if (strcmp(function, "print") == 0) {
         printf("\t%s\n", args);
         return;
-    } else if (strcmp(function, "clear") == 0) {
+    }
+    else if (strcmp(function, "clear") == 0) {
         system("cls");
         return;
-    } else if (strcmp(function, "info") == 0) {
+    }
+    else if (strcmp(function, "info") == 0) {
         printf("\tinfo\t-\tinformation about functions\n");
         printf("\tprint\t-\toutput function\n");
         printf("\tclear\t-\tclear console\n");
@@ -16,35 +18,41 @@ void textFunction(char *function, char *args) {
         printf("\ttan\t-\ttangent of the function\n");
         printf("\tctg\t-\tcotangent of the function\n");
         return;
-    } else {
+    }
+    else {
         printf("\ttextFunction parser error\n");
         return;
     }
 }
 
-double mathFunction(char *function, double value) {
-    if (strcmp(function, "sin") == 0) { //синус в градусах
+double math_function(char* function, double value) {
+    if (strcmp(function, "sin") == 0) {
         value = sin(PI / 180 * value);
         return value;
-    } else if (strcmp(function, "cos") == 0) { //косинус в градусах
+    }
+    else if (strcmp(function, "cos") == 0) {
         value = cos(PI / 180 * value);
         return value;
-    } else if (strcmp(function, "tan") == 0) { //тангенс в градусах
+    }
+    else if (strcmp(function, "tan") == 0) {
         value = tan(PI / 180 * value);
         return value;
-    } else if (strcmp(function, "ctg") == 0) { //котангенс в градусах
+    }
+    else if (strcmp(function, "ctg") == 0) {
         value = 1 / tan(PI / 180 * value);
         return value;
-    } else {
+    }
+    else {
         printf("\tmathFunction parser error\n");
         return value;
     }
 }
 
-double varsFunction(struct variable **varsLinkedListHead, char *function, char *args) {
-    if (strcmp(function, "var") == 0) { //вернуть переменную
-        return getValueByVarName(varsLinkedListHead, args);
-    } else {
+double vars_function(struct variable** vars_linked_list_head, char* function, char* args) {
+    if (strcmp(function, "var") == 0) {
+        return get_value_by_var_name(vars_linked_list_head, args);
+    }
+    else {
         printf("\tvarsFunction parser error\n");
         return 0.0;
     }

@@ -2,10 +2,10 @@
 
 #include "main.h"
 
-char **lexer(char *); //лексическая обработка
+char** lexer(char*);
 
-char **prepareTokens(char *); //подготовка токенов
+char** prepare_tokens(char*);
 
-void spacesRemoving(char *); //удаление пробелов
+void spaces_removing(char*);
 
-void deleteCurrentToken(char *, int); //удаление подстроки
+void delete_current_token(char*, int);

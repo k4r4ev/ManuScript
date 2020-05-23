@@ -3,10 +3,10 @@
 #include "main.h"
 #include "variables.h"
 
-void textFunction(char *, char *);
+void text_function(char *, char *);
 
-double mathFunction(char *, double);
+double math_function(char *, double);
 
-double varsFunction(struct variable **, char *, char *);
+double vars_function(struct variable **, char *, char *);
 
 #define PI 3.141592
