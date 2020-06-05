@@ -53,9 +53,12 @@ static double expression(struct variable** vars_linked_list_head, char* buffer) 
 
 double element(struct variable** vars_linked_list_head, char* buffer, int* index) {
     double value = function(vars_linked_list_head, buffer, index); //get the first number
+    printf("first:%lf\n", value);
+    printf("index:%c\n", (buffer[*index]));
     while ((buffer[*index] == '*') || (buffer[*index] == '/')) {
         if (buffer[*index] == '*') {
             *index = *index + 1;
+            //printf("second:%lf\n", function(vars_linked_list_head, buffer, index));
             value *= function(vars_linked_list_head, buffer, index);
         }
         if (buffer[*index] == '/') {
@@ -92,7 +95,7 @@ double function(struct variable** vars_linked_list_head, char* buffer, int* inde
         char* arg = malloc(buf_index + 1);
         strncpy_s(arg, sizeof(arg), buffer + (*index - buf_index), buf_index);
         value = vars_function(vars_linked_list_head, function_name, arg);
-        printf("\t%lf\n", value);
+        *index = *index + 1; //skip the '('
         return value;
     }
     return math_function(function_name, number(vars_linked_list_head, buffer, index));
