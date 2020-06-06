@@ -3,8 +3,8 @@
 #include "parser.h"
 
 int main() {
-    struct variable *vars_linked_list_head = NULL; //linked list for variables
-    char buffer[MAX_SIZE] = {0};
+    struct variable* vars_linked_list_head = NULL; //linked list for variables
+    char buffer[MAX_SIZE] = { 0 };
 
     while (gets_s(buffer, MAX_SIZE)) {
         if (strlen(buffer) == 0) break;

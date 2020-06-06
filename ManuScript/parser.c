@@ -2,10 +2,10 @@
 
 void parser(char* string, struct variable** vars_linked_list_head) {
     char buffer[MAX_SIZE] = { 0 };
-    double value = 0.0;
-    char* variable = 0;
-    char* function = 0;
-    char* argument = 0;
+    double value;
+    char* variable;
+    char* function;
+    char* argument;
     int i = 0, k = 0;
     for (i; (string[i] != '(') && (string[i] != '=') && (string[i] != ';') && (string[i] != '\0'); i++) {
         buffer[i] = string[i]; //getting the name of function or variable
@@ -53,26 +53,30 @@ static double expression(struct variable** vars_linked_list_head, char* buffer) 
 
 double element(struct variable** vars_linked_list_head, char* buffer, int* index) {
     double value = function(vars_linked_list_head, buffer, index); //get the first number
-    printf("first:%lf\n", value);
-    printf("index:%c\n", (buffer[*index]));
-    while ((buffer[*index] == '*') || (buffer[*index] == '/')) {
+    while ((buffer[*index] == '*') || (buffer[*index] == '/') || (buffer[*index] == '^')) {
         if (buffer[*index] == '*') {
             *index = *index + 1;
-            //printf("second:%lf\n", function(vars_linked_list_head, buffer, index));
             value *= function(vars_linked_list_head, buffer, index);
         }
         if (buffer[*index] == '/') {
             *index = *index + 1;
             value /= function(vars_linked_list_head, buffer, index);
         }
-        //if (buffer[*index] == '/') {}
+        if (buffer[*index] == '^') {
+            *index = *index + 1;
+            const int power = (int)function(vars_linked_list_head, buffer, index);
+            const double value_helper = value;
+            for (int i = 1; i < power; i++) {
+                value *= value_helper;
+            }
+        }
     }
     return value;
 }
 
 double function(struct variable** vars_linked_list_head, char* buffer, int* index) {
     int buf_index = 0;
-    double value = 0.0;
+    double value;
     while (isalpha(buffer[*index])) { //is character
         buf_index++; //how many symbols
         *index = *index + 1;
@@ -106,8 +110,7 @@ double number(struct variable** vars_linked_list_head, char* buffer, int* index)
     double value = 0.0; //result
     if (buffer[*index] == '(') {
         *index = *index + 1;
-        char* p_substr = 0;
-        p_substr = brackets(buffer, index);
+        char* p_substr = brackets(buffer, index);
         value = expression(vars_linked_list_head, p_substr);
         return value;
     }
@@ -149,6 +152,8 @@ char* brackets(const char* buffer, int* index) {
             break;
         case '(':
             num_l++;
+            break;
+        default:
             break;
         }
         *index = *index + 1;
