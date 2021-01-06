@@ -1,6 +1,6 @@
 #pragma once
 
-#include "main.h"
+#include "manuscript.h"
 #include "functions.h"
 #include "variables.h"
 

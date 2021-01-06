@@ -1,6 +1,6 @@
 #pragma once
 
-#include "main.h"
+#include "manuscript.h"
 
 struct variable {
     char name[MAX_SIZE];

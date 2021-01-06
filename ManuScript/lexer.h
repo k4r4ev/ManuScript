@@ -1,6 +1,6 @@
 #pragma once
 
-#include "main.h"
+#include "manuscript.h"
 
 char** lexer(char*);
 char** prepare_tokens(char*);

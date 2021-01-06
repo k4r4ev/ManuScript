@@ -1,4 +1,4 @@
-﻿#include "parser.h"
+#include "parser.h"
 
 void parser(char* string, struct variable** vars_linked_list_head) {
     char buffer[MAX_SIZE] = { 0 };

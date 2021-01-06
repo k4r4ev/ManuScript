@@ -1,2 +1,0 @@
-# ManuScript
-String calculator

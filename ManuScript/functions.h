@@ -1,6 +1,6 @@
 #pragma once
 
-#include "main.h"
+#include "manuscript.h"
 #include "variables.h"
 
 void text_function(char*, char*);

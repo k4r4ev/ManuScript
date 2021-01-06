@@ -1,7 +1,7 @@
 #include "variables.h"
 
 void push_variable(struct variable** head, char* name, const double value) {
-    struct variable* tmp = (struct variable*) malloc(sizeof(struct variable));
+    struct variable* tmp = (struct variable*)malloc(sizeof(struct variable));
     strcpy_s(tmp->name, sizeof(tmp->name), name);
     tmp->value = value;
     tmp->next = (*head);

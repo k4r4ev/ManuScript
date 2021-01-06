@@ -20,6 +20,8 @@
 x64/
 x86/
 bld/
+out/
+cmake-build-debug/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
